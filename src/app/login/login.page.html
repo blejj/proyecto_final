@@ -5,14 +5,21 @@
 </ion-header>
 
 <ion-content>
+  <!-- Campo de entrada para el correo electrónico del usuario -->
   <ion-item>
     <ion-label position="floating">Email</ion-label>
     <ion-input type="email" [(ngModel)]="email"></ion-input>
   </ion-item>
+
+  <!-- Campo de entrada para la contraseña del usuario -->
   <ion-item>
     <ion-label position="floating">Password</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
   </ion-item>
+
+  <!-- Botón que llama a la función login() al hacer clic -->
   <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
+  
+  <!-- Botón que navega a la página de registro mediante routerLink -->
   <ion-button expand="full" routerLink="/register">Ir a registrar</ion-button>
 </ion-content>
