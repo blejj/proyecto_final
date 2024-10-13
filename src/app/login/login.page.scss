@@ -1,0 +1,53 @@
+.toast-message {
+    text-align: center;
+}
+
+ion-content {
+    height: 100%;
+    width: 100%;
+    background-image: url('../../assets/luxa.org-opacity-changed-iStock-518012153.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    --background: none;
+}
+
+ion-content img{
+    width: 20%;
+}
+
+ion-content ion-title{
+    color: orange;
+    padding-left: 30px;
+}
+
+.titulo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+ion-button.botonInicio{
+    border-radius: 5px;
+    display: flex;
+    padding-top: 20px;
+    padding-left: 60px;
+    padding-right: 60px;
+    --background: rgb(245, 188, 84);
+}
+
+ion-button.botonInicio:hover{
+    --background: rgb(245, 217, 165);
+}
+
+
+ion-toolbar{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    --background:none;
+}
+
+ion-toolbar img{
+    width: 10%;
+}

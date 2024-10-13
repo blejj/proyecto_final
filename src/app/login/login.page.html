@@ -1,10 +1,8 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <div class="titulo">
+    <img src="../../assets/icon/Logotipo_Protectora_Animal_Delicado_Crema_y_Negro-removebg-preview.png" alt="">
+    <ion-title>INICIO DE SESIÓN</ion-title>
+  </div>
   <ion-item>
     <ion-label position="floating">Email</ion-label>
     <ion-input type="email" [(ngModel)]="email"></ion-input>
@@ -13,6 +11,6 @@
     <ion-label position="floating">Password</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
   </ion-item>
-  <ion-button expand="full" (click)="login()">Iniciar Sesión</ion-button>
-  <ion-button expand="full" routerLink="/register">Ir a registrar</ion-button>
+  <ion-button class="botonInicio" (click)="login()">Iniciar Sesión</ion-button>
+  <ion-button class="botonInicio" routerLink="/register">Ir a registrar</ion-button>
 </ion-content>
