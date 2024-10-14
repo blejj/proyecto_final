@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Subir Nueva Publicación</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="publicacionForm" (ngSubmit)="guardarPublicacion()">
+    <ion-item>
+      <ion-label position="floating"></ion-label>
+      <input type="file" (change)="subirImagen($event)" accept="image/*" />
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input formControlName="titulo" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-input formControlName="descripcion" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Ubicación</ion-label>
+      <ion-input formControlName="ubicacion" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Animal</ion-label>
+      <ion-select formControlName="animal" required>
+        <ion-select-option value="Perro">Perro</ion-select-option>
+        <ion-select-option value="Gato">Gato</ion-select-option>
+        <ion-select-option value="Otro">Otro</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Raza</ion-label>
+      <ion-input formControlName="raza" required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Edad</ion-label>
+      <ion-input type="number" formControlName="edad" required></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit">Subir Publicación</ion-button>
+  </form>
+</ion-content>
