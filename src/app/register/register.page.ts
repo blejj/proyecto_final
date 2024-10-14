@@ -20,16 +20,12 @@ export class RegisterPage {
    */
   password: string = '';
 
-<<<<<<< HEAD
   constructor(private authService: AuthService, private toastController: ToastController) {}
-=======
   /**
    * Constructor que inyecta el servicio de autenticación.
    * 
    * @param {AuthService} authService - Servicio utilizado para realizar el registro de usuarios.
    */
-  constructor(private authService: AuthService) {}
->>>>>>> 9328de0bb882c9469f6fd0ba2b20f254c7b12aaa
 
   /**
    * Método asíncrono para registrar un nuevo usuario.
@@ -59,14 +55,9 @@ export class RegisterPage {
       if (error.code) {
         console.error('Firebase error code:', error.code);
       }
-<<<<<<< HEAD
       const errorMessage = error.message || 'Ocurrió un error durante el registro.';
       await this.showToast(errorMessage); // Mostrar el mensaje de error como toast
-=======
       // Mostrar un mensaje de error al usuario
-      const errorMessage = error.message || 'An error occurred during registration.';
-      alert(errorMessage);
->>>>>>> 9328de0bb882c9469f6fd0ba2b20f254c7b12aaa
     }
   }
 
