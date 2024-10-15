@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { ToastController } from '@ionic/angular';
+import { AuthService } from '../services/auth.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterPage {
    */
   password: string = '';
 
-  constructor(private authService: AuthService, private toastController: ToastController) {}
+  constructor(private authService: AuthService, private toastService: ToastService) {}
   /**
    * Constructor que inyecta el servicio de autenticación.
    * 
@@ -42,7 +42,7 @@ export class RegisterPage {
     // Validar si el correo y la contraseña han sido proporcionados
     if (!this.email || !this.password) {
       const errorMessage = 'Ingrese email y contraseña';
-      await this.showToast(errorMessage);
+      await this.toastService.showToast(errorMessage);
       return;
     }
   
@@ -56,17 +56,8 @@ export class RegisterPage {
         console.error('Firebase error code:', error.code);
       }
       const errorMessage = error.message || 'Ocurrió un error durante el registro.';
-      await this.showToast(errorMessage); // Mostrar el mensaje de error como toast
+      await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
       // Mostrar un mensaje de error al usuario
     }
-  }
-
-  async showToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 3000, // Duración del toast en milisegundos
-      position: 'bottom', // Posición del toast en la pantalla
-    });
-    await toast.present();
   }
 }

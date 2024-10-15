@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginPage {
    */
   password: string = '';
 
-  constructor(private authService: AuthService, private router: Router, private toastController: ToastController) {}
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {}
 
   /**
    * Función asíncrona para iniciar sesión en la aplicación.
@@ -39,7 +39,7 @@ export class LoginPage {
     // Verificar que el usuario haya completado tanto el email como la contraseña
     if (!this.email || !this.password) {
       const errorMessage = 'Ingrese email y contraseña';
-      await this.showToast(errorMessage);
+      await this.toastService.showToast(errorMessage);
       return;
     }
   
@@ -54,17 +54,8 @@ export class LoginPage {
         console.error('Firebase error code:', error.code);
       }
       const errorMessage = error.message || 'Ocurrió un error durante el login';
-      await this.showToast(errorMessage); // Mostrar el mensaje de error como toast
+      await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
     }
   }
 
-  // Método para mostrar el toast
-  async showToast(message: string) {
-    const toast = await this.toastController.create({
-      message: message,
-      duration: 3000, // Duración del toast en milisegundos
-      position: 'bottom', // Posición del toast en la pantalla
-    });
-    await toast.present();
-  }
 }
