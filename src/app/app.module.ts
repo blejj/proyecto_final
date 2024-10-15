@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular'; 
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 // Firebase imports
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
@@ -21,7 +22,8 @@ import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-
     IonicModule.forRoot(), // Configuración básica de Ionic
     AppRoutingModule, // Agrega AppRoutingModule para las rutas
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     // Inicializar Firebase con la configuración del entorno
