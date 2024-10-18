@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { AppComponent } from './app.component';
-import { environment } from 'src/environments/environment'; // Configuración del entorno
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-publicacion-modal.component';
 
@@ -21,7 +21,7 @@ import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-
     BrowserModule,
     IonicModule.forRoot(), // Configuración básica de Ionic
     AppRoutingModule, // Agrega AppRoutingModule para las rutas
-    FormsModule,
+    FormsModule, //Crear y gestionar formularios que dependen del HTML de la plantilla.
     ReactiveFormsModule,
     HttpClientModule
   ],

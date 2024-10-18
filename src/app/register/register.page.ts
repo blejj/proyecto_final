@@ -54,10 +54,21 @@ export class RegisterPage {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
         console.error('Firebase error code:', error.code);
+
+        if(error.code === 'auth/email-already-in-use'){
+          const errorMessage = 'El email ya está registrado, iniciá sesión.';
+          await this.toastService.showToast(errorMessage);
+        }
+        else if(error.code === 'auth/invalid-email'){
+          const errorMessage = 'El email ingresado no es valido para registar.';
+          await this.toastService.showToast(errorMessage);
+        }else{
+          const errorMessage = error.message || 'Ocurrió un error durante el registro.';
+          await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
+          // Mostrar un mensaje de error al usuario
+        }
       }
-      const errorMessage = error.message || 'Ocurrió un error durante el registro.';
-      await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
-      // Mostrar un mensaje de error al usuario
+      
     }
   }
 }

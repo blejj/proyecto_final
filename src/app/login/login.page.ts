@@ -52,9 +52,25 @@ export class LoginPage {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
         console.error('Firebase error code:', error.code);
+    
+        // Verifica si el error es por contraseña incorrecta
+        if (error.code === 'auth/wrong-password') {
+          const errorMessage = 'La contraseña ingresada es incorrecta';
+          await this.toastService.showToast(errorMessage);
+        } else if (error.code === 'auth/user-not-found') {
+          const errorMessage = 'No se encontró una cuenta con este correo';
+          await this.toastService.showToast(errorMessage);
+        } else if (error.code === 'auth/invalid-credential') {
+          const errorMessage = 'Las credenciales proporcionadas no son válidas. Verifica tu correo y contraseña.';
+          await this.toastService.showToast(errorMessage);
+        } else if (error.code === 'auth/invalid-email'){
+          const errorMessage = 'Los datos son incorrectos, volvé a intentar!';
+          await this.toastService.showToast(errorMessage);
+        }else {
+          const errorMessage = error.message || 'Ocurrió un error durante el login';
+          await this.toastService.showToast(errorMessage);
+        }
       }
-      const errorMessage = error.message || 'Ocurrió un error durante el login';
-      await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
     }
   }
 

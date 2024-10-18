@@ -10,7 +10,7 @@ interface Publicacion {
   animal: string;
   raza: string;
   edad: number | null;
-  fecha: Date; // Agrega esta propiedad
+  fecha: Date;
 }
 
 @Component({
@@ -21,7 +21,7 @@ interface Publicacion {
 export class Tab1Page {
   publicaciones: Publicacion[] = []; // Todas las publicaciones
   publicacionesFiltradas: Publicacion[] = []; // Publicaciones que se muestran
-  modalAbierto: boolean = false;
+  modalAbierto: boolean = false; // Arranca el modal en false
 
   nuevaPublicacion: any = {
     titulo: '',
@@ -43,7 +43,7 @@ export class Tab1Page {
   
     modal.onDidDismiss().then((data) => {
       if (data.data) {
-        // Aquí es donde deberías recibir los datos de la nueva publicación
+        // Acá es donde recibimos los datos de la nueva publicación
         const nuevaPublicacion: Publicacion = {
           ...data.data,
           fecha: new Date(), // Asignar fecha al recibir la publicación

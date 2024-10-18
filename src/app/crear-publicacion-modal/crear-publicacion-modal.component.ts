@@ -15,10 +15,10 @@ export class CrearPublicacionModalComponent implements OnInit {
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
       ubicacion: ['', Validators.required],
-      animal: ['', Validators.required],
+      animal: ['', Validators.required],     // con el validator, estamos haciendo que sea obligatorio la carga de los datos.
       raza: ['', Validators.required],
       edad: ['', Validators.required],
-      imagen: [null], // Asegúrate de que la imagen sea obligatoria
+      imagen: [null], 
     });
   }
 
