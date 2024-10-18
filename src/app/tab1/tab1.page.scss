@@ -45,6 +45,9 @@
   height: 3rem;
 }
 
+//Hicimos esto para que el background predeterminado del ionic no esté y con el before, hacer que se pegue la
+//imagen con opacidad con posición absoluta.
+
 ion-content {
   position: relative;
   --background: none; /* Eliminar el fondo predeterminado */

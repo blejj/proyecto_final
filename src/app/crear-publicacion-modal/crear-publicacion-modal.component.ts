@@ -14,8 +14,7 @@ export class CrearPublicacionModalComponent implements OnInit {
     this.publicacionForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
-      ubicacion: ['', Validators.required],
-      animal: ['', Validators.required],     // con el validator, estamos haciendo que sea obligatorio la carga de los datos.
+      ubicacion: ['', Validators.required],  // con el validator, estamos haciendo que sea obligatorio la carga de los datos.
       raza: ['', Validators.required],
       edad: ['', Validators.required],
       imagen: [null], 
@@ -48,7 +47,6 @@ export class CrearPublicacionModalComponent implements OnInit {
       formData.append('titulo', this.publicacionForm.value.titulo);
       formData.append('descripcion', this.publicacionForm.value.descripcion);
       formData.append('ubicacion', this.publicacionForm.value.ubicacion);
-      formData.append('animal', this.publicacionForm.value.animal);
       formData.append('raza', this.publicacionForm.value.raza);
       formData.append('edad', this.publicacionForm.value.edad);
       formData.append('imagen', this.publicacionForm.value.imagen); // Adjunta la imagen

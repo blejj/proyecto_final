@@ -1,0 +1,29 @@
+ion-card {
+    margin: 15px;
+    --border-radius: 10px;
+    --background: #fff;
+  }
+  
+  ion-avatar img {
+    border-radius: 50%;
+  }
+  
+  ion-button {
+    margin-top: 10px;
+    --background: rgb(55, 0, 255);
+  }
+
+  .boton-publicacion{
+    display: flex;
+    justify-content: center;
+  }
+
+  ion-modal {
+    ion-content {
+      padding: 20px;
+    }
+  }
+  
+  ion-item {
+    margin-bottom: 20px;
+  }

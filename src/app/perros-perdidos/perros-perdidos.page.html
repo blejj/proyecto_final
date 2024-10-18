@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="navegarInicio()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Publicaciones Perros Perdidos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Filtro por fecha -->
+  <ion-item>
+    <ion-label>Filtrar por los últimos:</ion-label>
+    <ion-select (ionChange)="filtrarPorFecha($event.detail.value)">
+      <ion-select-option value="1">1 día</ion-select-option>
+      <ion-select-option value="7">7 días</ion-select-option>
+      <ion-select-option value="30">30 días</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Botón para subir una nueva publicación -->
+  <ion-button expand="full" (click)="abrirModal()">Subir Publicación</ion-button>
+
+  <!-- Lista de publicaciones -->
+  <ion-list>
+    <ion-item *ngFor="let publicacion of publicacionesFiltradas">
+      <ion-thumbnail slot="start">
+        <img [src]="publicacion.imagen" alt="Imagen de la mascota">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ publicacion.titulo }}</h2>
+        <p>{{ publicacion.descripcion }}</p>
+        <p><strong>Ubicación:</strong> {{ publicacion.ubicacion }}</p>
+        <p><strong>Raza:</strong> {{ publicacion.raza }}</p>
+        <p><strong>Edad:</strong> {{ publicacion.edad }} años</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<!-- Modal para el formulario -->
+<ion-modal [isOpen]="modalAbierto" (ionModalDidDismiss)="modalAbierto = false">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Subir Nueva Publicación</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form (ngSubmit)="crearPublicacion()">
+      <ion-item>
+        <ion-label position="floating">Imagen</ion-label>
+        <input type="file" (change)="subirImagen($event)" />
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Título</ion-label>
+        <ion-input [(ngModel)]="nuevaPublicacion.titulo" name="titulo" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Descripción</ion-label>
+        <ion-input [(ngModel)]="nuevaPublicacion.descripcion" name="descripcion" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Ubicación</ion-label>
+        <ion-input [(ngModel)]="nuevaPublicacion.ubicacion" name="ubicacion" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Raza</ion-label>
+        <ion-input [(ngModel)]="nuevaPublicacion.raza" name="raza" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input type="number" [(ngModel)]="nuevaPublicacion.edad" name="edad" required></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit">Subir Publicación</ion-button>
+    </form>
+  </ion-content>
+</ion-modal>

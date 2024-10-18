@@ -7,9 +7,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 3</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-tab-button (click)="logout()">
+    <ion-icon aria-hidden="true" name="log-out"></ion-icon>
+    <ion-label>Cerrar Sesión</ion-label>
+  </ion-tab-button>
 </ion-content>
