@@ -4,6 +4,7 @@ import { ToastService } from '../services/toast.service';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CrearPublicacionModalComponent } from '../crear-publicacion-modal/crear-publicacion-modal.component'; // Asegúrate de que esta ruta sea correcta
+import { CamaraService } from '../services/camara.service';
 
 interface Publicacion {
   titulo: string;
@@ -35,7 +36,7 @@ export class PerrosEncontradosPage {
     imagen: ''
   };
 
-  constructor(private modalCtrl: ModalController, private router: Router, private apiService: ApiService, private toastService: ToastService) {}
+  constructor(private modalCtrl: ModalController, private router: Router, private apiService: ApiService, private toastService: ToastService, private camaraService: CamaraService) {}
 
   // Método para abrir el modal
   async abrirModal() {
@@ -81,12 +82,9 @@ export class PerrosEncontradosPage {
   }
 
   // Método para subir una imagen
-  subirImagen(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.nuevaPublicacion.imagen = URL.createObjectURL(file); // Para mostrar la imagen
+    async tomarFoto(){
+      this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
     }
-  }
 
   // Método para filtrar las publicaciones por fecha
   filtrarPorFecha(dias: number) {

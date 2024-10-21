@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { CamaraService } from '../services/camara.service';
 
 @Component({
   selector: 'app-crear-publicacion-modal',
@@ -10,7 +11,7 @@ import { ModalController } from '@ionic/angular';
 export class CrearPublicacionModalComponent implements OnInit {
   publicacionForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private modalController: ModalController) {
+  constructor(private formBuilder: FormBuilder, private modalController: ModalController, private camaraService: CamaraService) {
     this.publicacionForm = this.formBuilder.group({
       titulo: ['', Validators.required],
       descripcion: ['', Validators.required],
@@ -23,23 +24,20 @@ export class CrearPublicacionModalComponent implements OnInit {
 
   ngOnInit() {}
 
-  subirImagen(event: Event): void {
-    const input = event.target as HTMLInputElement; // Asegúrate de que sea un HTMLInputElement
-    if (input.files && input.files.length > 0) {
-      const file = input.files[0];
-      // Verifica si el archivo es una imagen
-      if (file.type.startsWith('image/')) {
+    //implementamos el servicio de la camara
+    async cargarFoto(){
+      const imagenUrl = await this.camaraService.tomarFoto();
+
+      if(imagenUrl){
+        //actualizar formulario con la imagen capturada
         this.publicacionForm.patchValue({
-          imagen: file // Almacena el archivo en el formulario
-        });
-        console.log('Imagen seleccionada:', file.name); // Muestra el nombre de la imagen en consola
-      } else {
-        console.error('El archivo seleccionado no es una imagen');
+          imagen: imagenUrl
+        })
+        
+        //para verificar en consola imagen capturada/seleccionada
+        console.log('Imagen capturada:', imagenUrl);
       }
-    } else {
-      console.error('No se ha seleccionado ningún archivo');
     }
-  }
 
   guardarPublicacion(): void {
     if (this.publicacionForm.valid) {

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CrearPublicacionModalComponent } from '../crear-publicacion-modal/crear-publicacion-modal.component'; // Asegúrate de que esta ruta sea correcta
+import { CamaraService } from '../services/camara.service';
 
 interface Publicacion {
   titulo: string;
@@ -33,7 +34,7 @@ export class PerrosPerdidosPage {
     imagen: ''
   };
 
-  constructor(private modalCtrl: ModalController, private router: Router) {}
+  constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService) {}
 
   // Método para abrir el modal
   async abrirModal() {
@@ -79,12 +80,9 @@ export class PerrosPerdidosPage {
   }
 
   // Método para subir una imagen
-  subirImagen(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.nuevaPublicacion.imagen = URL.createObjectURL(file); // Para mostrar la imagen
+    async tomarFoto(){
+      this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
     }
-  }
 
   // Método para filtrar las publicaciones por fecha
   filtrarPorFecha(dias: number) {
