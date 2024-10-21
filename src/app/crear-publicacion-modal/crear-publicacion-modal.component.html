@@ -10,8 +10,8 @@
 <ion-content>
   <form [formGroup]="publicacionForm" (ngSubmit)="guardarPublicacion()">
     <ion-item>
-      <ion-label position="floating"></ion-label>
-      <input type="file" (change)="subirImagen($event)" accept="image/*" />
+      <ion-label position="floating">Imagen</ion-label>
+      <ion-button (click)="cargarFoto()">Tomar Foto o Elegir de Galería</ion-button>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Título</ion-label>
