@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { ToastService } from '../services/toast.service';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -12,7 +14,7 @@ export class Tab2Page implements OnInit {
   razaSeleccionada: string = '';
   imagenSeleccionada: string | null = null; // Almacena la imagen seleccionada
 
-  constructor(private apiService: ApiService, private toastService: ToastService) {}
+  constructor(private apiService: ApiService, private toastService: ToastService, private authService: AuthService, private router: Router) {}
 
   ngOnInit() {
     this.cargarListaRazas();
@@ -34,6 +36,14 @@ export class Tab2Page implements OnInit {
       this.apiService.obtenerImagenPorRaza(this.razaSeleccionada).subscribe((data: any) => {
         this.imagenSeleccionada = data.message; // Almacenar la imagen seleccionada
       });
+    }
+  }
+
+  ionViewWillEnter() {
+    // Verificar si el usuario está autenticado
+    if (!this.authService.isLoggedIn()) {
+      // Redirigir al login si no está autenticado
+      this.router.navigate(['/login']);
     }
   }
 }

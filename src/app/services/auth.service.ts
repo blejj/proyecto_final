@@ -1,45 +1,47 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from '@angular/fire/auth';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-
-
 export class AuthService {
 
-  /**
-   * Constructor que inyecta la instancia de Firebase Auth.
-   * 
-   * @param {Auth} auth - Instancia del servicio de autenticación de Firebase.
-   */
-  constructor(private auth: Auth) {}
+  private currentUser: User | null = null;
 
-  /**
-   * Inicia sesión con el correo electrónico y la contraseña proporcionados.
-   * 
-   * @param {string} email - Correo electrónico del usuario.
-   * @param {string} password - Contraseña del usuario.
-   * @returns {Promise<any>} Retorna una promesa que se resuelve si el inicio de sesión es exitoso 
-   * o se rechaza con un error si falla.
-   */
-  login(email: string, password: string) {
-    return signInWithEmailAndPassword(this.auth, email, password);
+  constructor(private auth: Auth) {
+    // Escuchar el estado de autenticación del usuario
+    onAuthStateChanged(this.auth, (user) => {
+      this.currentUser = user;
+    });
   }
 
-  /**
-   * Registra un nuevo usuario con el correo electrónico y la contraseña proporcionados.
-   * 
-   * @param {string} email - Correo electrónico del nuevo usuario.
-   * @param {string} password - Contraseña del nuevo usuario.
-   * @returns {Promise<any>} Retorna una promesa que se resuelve si el registro es exitoso 
-   * o se rechaza con un error si falla.
-   */
+  // Método para registrar un nuevo usuario
   register(email: string, password: string) {
     return createUserWithEmailAndPassword(this.auth, email, password);
   }
 
+  // Método para iniciar sesión
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  // Método para cerrar sesión
   logout() {
-    return signOut(this.auth); // Llama a signOut para cerrar la sesión
+    return signOut(this.auth);
+  }
+
+  // Método para verificar si el usuario está autenticado
+  isLoggedIn(): boolean {
+    return this.currentUser !== null;
+  }
+
+  // También puedes agregar un observable para el estado de autenticación si prefieres usar programación reactiva
+  getAuthState(): Observable<User | null> {
+    return new Observable((subscriber) => {
+      onAuthStateChanged(this.auth, (user) => {
+        subscriber.next(user);
+      });
+    });
   }
 }

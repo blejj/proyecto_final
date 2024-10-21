@@ -21,4 +21,13 @@ export class Tab3Page {
     }
   }
 
+  ionViewWillEnter() {
+    // Verificar si el usuario está autenticado
+    if (!this.authService.isLoggedIn()) {
+      // Redirigir al login si no está autenticado
+      this.router.navigate(['/login']);
+    }
+  }
 }
+
+

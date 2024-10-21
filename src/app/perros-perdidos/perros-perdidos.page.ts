@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CrearPublicacionModalComponent } from '../crear-publicacion-modal/crear-publicacion-modal.component'; // Asegúrate de que esta ruta sea correcta
 import { CamaraService } from '../services/camara.service';
+import { AuthService } from '../services/auth.service';
 
 interface Publicacion {
   titulo: string;
@@ -34,7 +35,7 @@ export class PerrosPerdidosPage {
     imagen: ''
   };
 
-  constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService) {}
+  constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService, private authService: AuthService) {}
 
   // Método para abrir el modal
   async abrirModal() {
@@ -96,5 +97,13 @@ export class PerrosPerdidosPage {
 
   navegarInicio() {
     this.router.navigate(['/tabs']); // Cambia '/tabs' si tu ruta de inicio es diferente
+  }
+
+  ionViewWillEnter() {
+    // Verificar si el usuario está autenticado
+    if (!this.authService.isLoggedIn()) {
+      // Redirigir al login si no está autenticado
+      this.router.navigate(['/login']);
+    }
   }
 }
