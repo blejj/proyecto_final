@@ -20,12 +20,31 @@ export class RegisterPage {
    */
   password: string = '';
 
-  constructor(private authService: AuthService, private toastService: ToastService) {}
   /**
-   * Constructor que inyecta el servicio de autenticación.
-   * 
-   * @param {AuthService} authService - Servicio utilizado para realizar el registro de usuarios.
+   * Nombre proporcionado por el usuario para el registro.
+   * @type {string}
    */
+  nombre: string = '';
+
+  /**
+   * Apellido proporcionado por el usuario para el registro.
+   * @type {string}
+   */
+  apellido: string = '';
+
+  /**
+   * Teléfono proporcionado por el usuario para el registro.
+   * @type {string}
+   */
+  telefono: string = '';
+
+  /**
+   * URL de la foto proporcionada por el usuario para el registro.
+   * @type {string}
+   */
+  foto: string = '';
+
+  constructor(private authService: AuthService, private toastService: ToastService) {}
 
   /**
    * Método asíncrono para registrar un nuevo usuario.
@@ -39,16 +58,16 @@ export class RegisterPage {
    * @throws {Error} Si ocurre un error durante el proceso de registro, se captura y se muestra un mensaje de error.
    */
   async register() {
-    // Validar si el correo y la contraseña han sido proporcionados
-    if (!this.email || !this.password) {
-      const errorMessage = 'Ingrese email y contraseña';
+    // Validar si el correo, la contraseña y otros campos han sido proporcionados
+    if (!this.email || !this.password || !this.nombre || !this.apellido || !this.telefono) {
+      const errorMessage = 'Ingrese todos los campos obligatorios';
       await this.toastService.showToast(errorMessage);
       return;
     }
   
     try {
       // Intentar registrar un nuevo usuario con el servicio de autenticación
-      await this.authService.register(this.email, this.password);
+      await this.authService.register(this.email, this.password, this.nombre, this.apellido, this.telefono, this.foto);
       alert('Registro exitoso');
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
@@ -60,15 +79,13 @@ export class RegisterPage {
           await this.toastService.showToast(errorMessage);
         }
         else if(error.code === 'auth/invalid-email'){
-          const errorMessage = 'El email ingresado no es valido para registar.';
+          const errorMessage = 'El email ingresado no es valido para registrar.';
           await this.toastService.showToast(errorMessage);
-        }else{
+        } else {
           const errorMessage = error.message || 'Ocurrió un error durante el registro.';
           await this.toastService.showToast(errorMessage); // Mostrar el mensaje de error como toast
-          // Mostrar un mensaje de error al usuario
         }
       }
-      
     }
   }
 }
