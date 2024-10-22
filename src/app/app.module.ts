@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Firebase imports
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore'; // Importa Firestore
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +22,7 @@ import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-
     BrowserModule,
     IonicModule.forRoot(), // Configuración básica de Ionic
     AppRoutingModule, // Agrega AppRoutingModule para las rutas
-    FormsModule, //Crear y gestionar formularios que dependen del HTML de la plantilla.
+    FormsModule, // Crear y gestionar formularios que dependen del HTML de la plantilla.
     ReactiveFormsModule,
     HttpClientModule
   ],
@@ -30,6 +31,8 @@ import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     // Inicializar Firebase Auth
     provideAuth(() => getAuth()),
+    // Inicializar Firestore
+    provideFirestore(() => getFirestore()), // Añade esta línea para Firestore
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA] 

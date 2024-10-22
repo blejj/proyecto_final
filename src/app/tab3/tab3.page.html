@@ -7,8 +7,21 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-tab-button (click)="logout()">
+  <div *ngIf="userData" class="profile-container">
+    <div class="profile-header">
+      <img *ngIf="userData.foto; else defaultImage" [src]="userData.foto" alt="Foto de perfil" class="profile-photo" />
+      <ng-template #defaultImage>
+        <img src="../../assets/icon/perfil.png" alt="Foto de perfil predeterminada" class="profile-photo" />
+      </ng-template>
+      <ion-icon name="pencil" class="edit-icon" (click)="changeProfilePicture()"></ion-icon>
+    </div>
+    <h2>{{ userData.nombre }} {{ userData.apellido }}</h2>
+    <p>Email: {{ userData.email }}</p>
+    <p>Teléfono: {{ userData.telefono }}</p>
+  </div>
+
+  <ion-button class="botonCerrarSesion" (click)="logout()">
     <ion-icon aria-hidden="true" name="log-out"></ion-icon>
     <ion-label>Cerrar Sesión</ion-label>
-  </ion-tab-button>
+  </ion-button>
 </ion-content>
