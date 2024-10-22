@@ -51,7 +51,7 @@ export class LoginPage {
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
-        console.error('Firebase error code:', error.code);
+        console.error('Codigo de error de Firebase:', error.code);
     
         // Verifica si el error es por contraseña incorrecta
         if (error.code === 'auth/wrong-password') {
