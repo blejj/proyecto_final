@@ -59,7 +59,6 @@ export class AuthService {
     }
   }
 
-  // También puedes agregar un observable para el estado de autenticación si prefieres usar programación reactiva
   getAuthState(): Observable<User | null> {
     return new Observable((subscriber) => {
       onAuthStateChanged(this.auth, (user) => {
