@@ -13,7 +13,7 @@
   font-optical-sizing: auto;
   font-weight: bold;
   font-style: normal;
-  color: rgb(0, 68, 255);
+  color: rgba(0, 153, 255, 0.925);
   letter-spacing: 0.25rem;
 }
 
@@ -28,7 +28,7 @@
 }
 
 .boton-perdidos ion-button{
-  --background: rgb(0, 68, 255);
+  --background: rgba(0, 153, 255, 0.925);
   width: 20rem;
   height: 3rem;
 }
@@ -40,7 +40,7 @@
 }
 
 .boton-encontrados ion-button{
-  --background: rgb(0, 68, 255);
+  --background: rgba(0, 153, 255, 0.925);
   width: 20rem;
   height: 3rem;
 }
