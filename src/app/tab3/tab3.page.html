@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Mi Perfil
-    </ion-title>
+    <ion-title>Mi Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +11,8 @@
       <ng-template #defaultImage>
         <img src="../../assets/icon/perfil.png" alt="Foto de perfil predeterminada" class="profile-photo" />
       </ng-template>
-      <ion-icon name="pencil" class="edit-icon" (click)="changeProfilePicture()"></ion-icon>
+      <!-- Ícono para editar foto de perfil -->
+      <ion-icon name="pencil" class="edit-icon" (click)="presentActionSheet()"></ion-icon>
     </div>
     <h2>{{ userData.nombre }} {{ userData.apellido }}</h2>
     <p>Email: {{ userData.email }}</p>
