@@ -17,7 +17,7 @@ export class AuthService {
   }
 
   // Método para registrar un nuevo usuario
-  async register(email: string, password: string, nombre: string, apellido: string, telefono: string, foto: string) {
+  async register(email: string, password: string, nombre: string, apellido: string, telefono: string) {
     // Crear un nuevo usuario
     const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
     const user = userCredential.user;
@@ -28,7 +28,6 @@ export class AuthService {
       nombre: nombre,
       apellido: apellido,
       telefono: telefono,
-      foto: foto
     });
   }
 
@@ -67,6 +66,7 @@ export class AuthService {
     });
   }
 
+  //Método para cambiar foto de perfil 
   async updateUserProfilePicture(uid: string, photoURL: string) {
     await setDoc(doc(this.firestore, 'users', uid), { foto: photoURL }, { merge: true });
   }
