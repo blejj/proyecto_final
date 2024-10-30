@@ -38,12 +38,6 @@ export class RegisterPage {
    */
   telefono: string = '';
 
-  /**
-   * URL de la foto proporcionada por el usuario para el registro.
-   * @type {string}
-   */
-  foto: string = '';
-
   constructor(private authService: AuthService, private toastService: ToastService) {}
 
   /**
@@ -67,18 +61,17 @@ export class RegisterPage {
   
     try {
       // Intentar registrar un nuevo usuario con el servicio de autenticación
-      await this.authService.register(this.email, this.password, this.nombre, this.apellido, this.telefono, this.foto);
+      await this.authService.register(this.email, this.password, this.nombre, this.apellido, this.telefono);
       alert('Registro exitoso');
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
         console.error('Firebase error code:', error.code);
 
-        if(error.code === 'auth/email-already-in-use'){
+        if (error.code === 'auth/email-already-in-use') {
           const errorMessage = 'El email ya está registrado, iniciá sesión.';
           await this.toastService.showToast(errorMessage);
-        }
-        else if(error.code === 'auth/invalid-email'){
+        } else if (error.code === 'auth/invalid-email') {
           const errorMessage = 'El email ingresado no es valido para registrar.';
           await this.toastService.showToast(errorMessage);
         } else {
