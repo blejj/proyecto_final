@@ -3,6 +3,8 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { Auth } from '@angular/fire/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -10,62 +12,108 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from '@angular/fire/stor
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page implements OnInit {
-  userData: any = {}; // Para almacenar los datos del usuario
-  storage = getStorage(); // Obtener la instancia del almacenamiento
+  userData: any = {};
+  storage = getStorage();
 
   constructor(
     private authService: AuthService,
     private router: Router,
-    private auth: Auth
+    private auth: Auth,
+    private actionSheetController: ActionSheetController // Inyectar ActionSheetController
   ) {}
 
   async ngOnInit() {
-    // Suscribirse al estado de autenticación del usuario
     this.auth.onAuthStateChanged(async (user) => {
       if (user) {
         try {
-          // Obtener los datos del usuario desde el servicio
           this.userData = await this.authService.getUserData(user.uid);
         } catch (error) {
           console.error('Error al obtener los datos del usuario:', error);
         }
       } else {
-        // Si no hay usuario autenticado, redirigir al login
         this.router.navigate(['/login']);
       }
     });
   }
 
-  async changeProfilePicture() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-
-    input.onchange = async (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      const file = target.files?.[0]; // Usar el operador opcional
-
-      if (file && this.auth.currentUser) { // Verificar si currentUser no es null
-        const filePath = `profile_pictures/${this.auth.currentUser.uid}`;
-        const fileRef = ref(this.storage, filePath); // Referencia al archivo
-
-        try {
-          // Subir el archivo
-          await uploadBytes(fileRef, file);
-          const downloadURL = await getDownloadURL(fileRef); // Obtener la URL de descarga
-          
-          // Actualizar la URL de la foto en Firestore
-          await this.authService.updateUserProfilePicture(this.auth.currentUser.uid, downloadURL);
-          this.userData.foto = downloadURL; // Actualizar la imagen en la interfaz de usuario
-        } catch (error) {
-          console.error('Error al subir la imagen:', error);
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Cambiar foto de perfil',
+      buttons: [
+        {
+          text: 'Tomar Foto',
+          icon: 'camera',
+          handler: () => this.takePhoto()
+        },
+        {
+          text: 'Seleccionar desde Galería',
+          icon: 'image',
+          handler: () => this.selectFromGallery()
+        },
+        {
+          text: 'Cancelar',
+          icon: 'close',
+          role: 'cancel'
         }
-      } else {
-        console.error('No hay usuario autenticado o no se seleccionó un archivo');
-      }
-    };
+      ]
+    });
+    await actionSheet.present();
+  }
 
-    input.click();
+  async takePhoto() {
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Camera,
+        quality: 90
+      });
+
+      if (photo.dataUrl) {
+        const file = await this.dataUrlToFile(photo.dataUrl, 'profile.jpg');
+        await this.uploadFile(file);
+      }
+    } catch (error) {
+      console.error("Error al tomar la foto:", error);
+    }
+  }
+
+  async selectFromGallery() {
+    try {
+      const photo = await Camera.getPhoto({
+        resultType: CameraResultType.DataUrl,
+        source: CameraSource.Photos,
+        quality: 90
+      });
+
+      if (photo.dataUrl) {
+        const file = await this.dataUrlToFile(photo.dataUrl, 'profile.jpg');
+        await this.uploadFile(file);
+      }
+    } catch (error) {
+      console.error("Error al seleccionar la foto:", error);
+    }
+  }
+
+  async dataUrlToFile(dataUrl: string, filename: string): Promise<File> {
+    const res: Response = await fetch(dataUrl);
+    const blob = await res.blob();
+    return new File([blob], filename, { type: 'image/jpeg' });
+  }
+
+  async uploadFile(file: File) {
+    if (file && this.auth.currentUser) {
+      const filePath = `profile_pictures/${this.auth.currentUser.uid}`;
+      const fileRef = ref(this.storage, filePath);
+
+      try {
+        await uploadBytes(fileRef, file);
+        const downloadURL = await getDownloadURL(fileRef);
+        await this.authService.updateUserProfilePicture(this.auth.currentUser.uid, downloadURL);
+        this.userData.foto = downloadURL;
+      } catch (error) {
+        console.error("Error al subir la imagen:", error);
+      }
+    }
   }
 
   async logout() {
@@ -73,15 +121,13 @@ export class Tab3Page implements OnInit {
       await this.authService.logout();
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error('Error al cerrar sesión:', error);
-      alert('Ocurrió un error al cerrar sesión');
+      console.error("Error al cerrar sesión:", error);
+      alert("Ocurrió un error al cerrar sesión");
     }
   }
 
   ionViewWillEnter() {
-    // Verificar si el usuario está autenticado
     if (!this.authService.isLoggedIn()) {
-      // Redirigir al login si no está autenticado
       this.router.navigate(['/login']);
     }
   }
