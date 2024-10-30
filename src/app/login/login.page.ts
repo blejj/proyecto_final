@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
+import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth'; // Asegúrate de importar Auth y GoogleAuthProvider
 
 @Component({
   selector: 'app-login',
@@ -9,32 +10,25 @@ import { ToastService } from '../services/toast.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
+  email: string = ''; // Email proporcionado por el usuario
+  password: string = ''; // Contraseña proporcionada por el usuario
 
-  /**
-   * Email proporcionado por el usuario para el login.
-   * @type {string}
-   */
-  email: string = '';
+  constructor(private authService: AuthService, private router: Router, private toastService: ToastService, private auth: Auth) {}
 
-  /**
-   * Contraseña proporcionada por el usuario para el login.
-   * @type {string}
-   */
-  password: string = '';
+  // Método para iniciar sesión con Google
+  async loginWithGoogle() {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(this.auth, provider); // Asegúrate de pasar 'this.auth' aquí
+      console.log('Usuario logueado con Google:', result.user);
+      // Redirigir después del inicio de sesión exitoso si es necesario
+      this.router.navigate(['/tabs']); 
+    } catch (error) {
+      console.error('Error al iniciar sesión con Google:', error);
+      await this.toastService.showToast('Error al iniciar sesión con Google. Inténtalo de nuevo.'); // Usar el servicio de Toast
+    }
+  }
 
-  constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {}
-
-  /**
-   * Función asíncrona para iniciar sesión en la aplicación.
-   * 
-   * Este método valida si el usuario ha ingresado un correo electrónico y una contraseña. 
-   * Luego, intenta iniciar sesión utilizando el servicio de autenticación (AuthService).
-   * Si los campos de email o contraseña están vacíos, muestra una alerta al usuario.
-   * En caso de error durante el proceso de inicio de sesión, se captura el error, se registra en la consola (si existe un código de error) y se muestra un mensaje de alerta con la descripción del error.
-   *
-   * @returns {Promise<void>} No retorna ningún valor, pero puede mostrar alertas en caso de error o éxito.
-   * @throws {Error} Si ocurre un error en el proceso de autenticación, se captura y muestra al usuario un mensaje descriptivo.
-   */
   async login() {
     // Verificar que el usuario haya completado tanto el email como la contraseña
     if (!this.email || !this.password) {
@@ -42,7 +36,7 @@ export class LoginPage {
       await this.toastService.showToast(errorMessage);
       return;
     }
-  
+
     try {
       // Intentar iniciar sesión con el servicio de autenticación
       await this.authService.login(this.email, this.password);
@@ -51,8 +45,8 @@ export class LoginPage {
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
-        console.error('Codigo de error de Firebase:', error.code);
-    
+        console.error('Código de error de Firebase:', error.code);
+
         // Verifica si el error es por contraseña incorrecta
         if (error.code === 'auth/wrong-password') {
           const errorMessage = 'La contraseña ingresada es incorrecta';
@@ -63,15 +57,14 @@ export class LoginPage {
         } else if (error.code === 'auth/invalid-credential') {
           const errorMessage = 'Las credenciales proporcionadas no son válidas. Verifica tu correo y contraseña.';
           await this.toastService.showToast(errorMessage);
-        } else if (error.code === 'auth/invalid-email'){
+        } else if (error.code === 'auth/invalid-email') {
           const errorMessage = 'Los datos son incorrectos, volvé a intentar!';
           await this.toastService.showToast(errorMessage);
-        }else {
+        } else {
           const errorMessage = error.message || 'Ocurrió un error durante el login';
           await this.toastService.showToast(errorMessage);
         }
       }
     }
   }
-
 }

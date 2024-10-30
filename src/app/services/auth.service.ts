@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core'; 
-import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from '@angular/fire/auth';
+import { Injectable } from '@angular/core';
+import { Auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, User, fetchSignInMethodsForEmail, sendPasswordResetEmail } from '@angular/fire/auth';
 import { Firestore, setDoc, doc, getDoc } from '@angular/fire/firestore'; // Importar Firestore
 import { Observable } from 'rxjs';
 
@@ -66,8 +66,30 @@ export class AuthService {
     });
   }
 
-  //Método para cambiar foto de perfil 
+  // Método para cambiar foto de perfil 
   async updateUserProfilePicture(uid: string, photoURL: string) {
     await setDoc(doc(this.firestore, 'users', uid), { foto: photoURL }, { merge: true });
+  }
+
+  // Método para recuperar la contraseña
+  async enviarCorreoRecuperacion(email: string): Promise<string> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+      return 'Correo de recuperación enviado con éxito.';
+    } catch (error) {
+      console.error('Error al enviar el correo de recuperación:', error);
+      return 'Error: el correo no es válido o no está registrado.';
+    }
+  }
+
+  // Método para verificar si el email está registrado
+  async verificarEmailRegistrado(email: string): Promise<boolean> {
+    try {
+      const signInMethods = await fetchSignInMethodsForEmail(this.auth, email);
+      return signInMethods.length > 0; // Retorna true si el correo está registrado
+    } catch (error) {
+      console.error('Error al verificar el email:', error);
+      return false; // Retorna false en caso de error
+    }
   }
 }

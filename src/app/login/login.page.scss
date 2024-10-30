@@ -40,6 +40,14 @@ ion-button.botonInicio:hover{
     --background: rgb(245, 217, 165);
 }
 
+ion-button.botonGoogle{
+    border-radius: 5px;
+    display: flex;
+    padding-top: 20px;
+    padding-left: 60px;
+    padding-right: 60px;
+    --background: rgb(245, 188, 84);
+}
 
 ion-toolbar{
     display: flex;
@@ -50,4 +58,11 @@ ion-toolbar{
 
 ion-toolbar img{
     width: 10%;
+}
+
+p {
+   margin-top: 10px; 
+   text-align: right; 
+    color: blue; 
+    cursor: pointer;
 }
