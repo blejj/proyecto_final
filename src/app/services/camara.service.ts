@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
+/**
+ * Servicio para manejar la funcionalidad de la cámara en la aplicación.
+ * Proporciona métodos para tomar fotos y manipular imágenes.
+ * 
+ * @class
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -15,8 +21,7 @@ export class CamaraService {
    * foto o elegir una desde su galería de imágenes. El usuario tiene la opción de elegir entre 
    * tomar una foto o seleccionar una imagen existente a través de un cuadro de diálogo.
    * 
-   * @returns {Promise<string | undefined>} - Retorna una promesa que resuelve la URL de la imagen capturada 
-   * o seleccionada. La URL se puede usar directamente en aplicaciones web para mostrar la imagen.
+   * @returns {Promise<string | undefined>} - Promesa que se resuelve con la ruta de la imagen capturada, o `undefined` si ocurre un error.
    * 
    * 
    * **Notas**:

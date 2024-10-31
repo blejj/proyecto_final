@@ -3,6 +3,12 @@ import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
 
+/**
+ * Componente de la página de inicio de sesión.
+ * Permite a los usuarios ingresar su email y contraseña para autenticarse en la aplicación.
+ * 
+ * @component
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -22,21 +28,25 @@ export class LoginPage {
    */
   password: string = '';
 
+  /**
+   * Crea una instancia del componente LoginPage.
+   * 
+   * @param {AuthService} authService - Servicio de autenticación para manejar el inicio de sesión.
+   * @param {Router} router - Router de Angular para la navegación entre páginas.
+   * @param {ToastService} toastService - Servicio para mostrar mensajes de toast al usuario.
+   */
   constructor(private authService: AuthService, private router: Router, private toastService: ToastService) {}
 
   /**
-   * Función asíncrona para iniciar sesión en la aplicación.
+   * Intenta iniciar sesión con las credenciales proporcionadas.
+   * Valida que los campos no estén vacíos y maneja los errores que puedan surgir durante el proceso de autenticación.
    * 
-   * Este método valida si el usuario ha ingresado un correo electrónico y una contraseña. 
-   * Luego, intenta iniciar sesión utilizando el servicio de autenticación (AuthService).
-   * Si los campos de email o contraseña están vacíos, muestra una alerta al usuario.
-   * En caso de error durante el proceso de inicio de sesión, se captura el error, se registra en la consola (si existe un código de error) y se muestra un mensaje de alerta con la descripción del error.
-   *
-   * @returns {Promise<void>} No retorna ningún valor, pero puede mostrar alertas en caso de error o éxito.
-   * @throws {Error} Si ocurre un error en el proceso de autenticación, se captura y muestra al usuario un mensaje descriptivo.
+   * @async
+   * @function
+   * @returns {Promise<void>} - Promesa que se resuelve cuando el proceso de inicio de sesión se completa.
    */
   async login() {
-    // Verificar que el usuario haya completado tanto el email como la contraseña
+    // Validar que se ingresen email y contraseña
     if (!this.email || !this.password) {
       const errorMessage = 'Ingrese email y contraseña';
       await this.toastService.showToast(errorMessage);
@@ -53,7 +63,7 @@ export class LoginPage {
       if (error.code) {
         console.error('Codigo de error de Firebase:', error.code);
     
-        // Verifica si el error es por contraseña incorrecta
+        // Mensajes específicos según el código de error
         if (error.code === 'auth/wrong-password') {
           const errorMessage = 'La contraseña ingresada es incorrecta';
           await this.toastService.showToast(errorMessage);
