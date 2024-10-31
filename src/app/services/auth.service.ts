@@ -132,7 +132,12 @@ export class AuthService {
     await setDoc(doc(this.firestore, 'users', uid), { foto: photoURL }, { merge: true });
   }
 
-  // Método para recuperar la contraseña
+  /**
+ * Envía un correo electrónico para recuperar la contraseña.
+ *
+ * @param {string} email - La dirección de correo electrónico del usuario.
+ * @returns {Promise<string>} Un mensaje que indica el resultado del intento de envío.
+ */
   async enviarCorreoRecuperacion(email: string): Promise<string> {
     try {
       await sendPasswordResetEmail(this.auth, email);
@@ -143,7 +148,12 @@ export class AuthService {
     }
   }
 
-  // Método para verificar si el email está registrado
+  /**
+ * Verifica si un correo electrónico está registrado en el sistema.
+ *
+ * @param {string} email - La dirección de correo electrónico a verificar.
+ * @returns {Promise<boolean>} `true` si el correo está registrado, `false` en caso contrario o si ocurre un error.
+ */
   async verificarEmailRegistrado(email: string): Promise<boolean> {
     try {
       const signInMethods = await fetchSignInMethodsForEmail(this.auth, email);
