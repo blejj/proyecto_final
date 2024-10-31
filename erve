@@ -1,0 +1,251 @@
+[33mcommit a860369ae63605ad732fba8a4bfce4ebe7bea0c6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32msanti[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Merge: cdcc6a3 363a909
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Thu Oct 31 01:50:47 2024 -0300
+
+    Merge pull request #12 from blejj/pau
+    
+    Agregue para que me tome iniciar con google
+
+[33mcommit 363a9092a88dba7cdfb537ae3b3ac25fe71e3620[m[33m ([m[1;31morigin/pau[m[33m)[m
+Author: Pau <paula90zk@gmail.com>
+Date:   Thu Oct 31 01:48:29 2024 -0300
+
+    Agregue para que me tome iniciar con google
+
+[33mcommit cdcc6a3b7f5e60f1bd6e8dda6372e8680082182f[m
+Merge: 28d6ca6 ccec62a
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Wed Oct 30 22:56:01 2024 -0300
+
+    Merge pull request #11 from blejj/santi
+    
+    se documenta metodo de recupero de contraseña
+
+[33mcommit ccec62a27465a460da7e39926fa7b7c5d3bbb6c6[m[33m ([m[1;31morigin/santi[m[33m)[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Wed Oct 30 22:54:45 2024 -0300
+
+    se documenta metodo del google auth
+
+[33mcommit 28d6ca6142424ca330d46839de872dcec8991ce4[m
+Merge: c50817f 209fe0f
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Wed Oct 30 22:49:41 2024 -0300
+
+    Merge pull request #10 from blejj/santi
+    
+    se documentaron metodos faltantes en authservice
+
+[33mcommit 209fe0f372fe9fc6094709124a252f82be3adf98[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Wed Oct 30 22:48:45 2024 -0300
+
+    se documentaron metodos faltantes en authservice
+
+[33mcommit c50817ff65ed2565b0d1ae8fd78e05e8fd526c1a[m
+Merge: 306e054 554c992
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Wed Oct 30 22:43:21 2024 -0300
+
+    Merge pull request #9 from blejj/santi
+    
+    se documenta la app y se añadió toast en el registro exitoso
+
+[33mcommit 554c99275b6e2059b365fa5e327bc4e6a454861f[m
+Merge: df1bdbf 306e054
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Wed Oct 30 22:31:50 2024 -0300
+
+    Merge branch 'main' of https://github.com/blejj/proyecto_final into santi
+
+[33mcommit df1bdbfde095befce527cfb91f0268bfe57f0a53[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Wed Oct 30 21:59:39 2024 -0300
+
+    se documenta la app y se agrega toast de registro exitoso
+
+[33mcommit 306e054fbcc94d87e43eb2af5b86785fe8608a48[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Wed Oct 30 21:28:16 2024 -0300
+
+    Logo en android
+
+[33mcommit 662b0d823df4aa5f1e99bc7fe7a9caf4cd2423a1[m
+Merge: 5b1b2e6 444b8a9
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Wed Oct 30 19:47:35 2024 -0300
+
+    Merge pull request #8 from blejj/pau
+    
+    Agregue boton de inicio con google, y olvido de contraseña
+
+[33mcommit 444b8a93c839935b72516a50f94e69a70dadca05[m
+Author: Pau <paula90zk@gmail.com>
+Date:   Wed Oct 30 19:46:59 2024 -0300
+
+    Agregue boton de inicio con google, y olvido de contraseña
+
+[33mcommit 5b1b2e626eecb8854d7a391054d9a4881cc91fed[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Wed Oct 30 18:24:20 2024 -0300
+
+    Agregué el fondo a todas las pestañas
+
+[33mcommit 5472e1471d3aaf73fcd33b6dda2f40d7167ba4f0[m
+Merge: 31ea9f6 3708bc5
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Wed Oct 30 15:07:30 2024 -0300
+
+    Merge pull request #7 from blejj/pau
+    
+    Elimine el campo foto en registro
+
+[33mcommit 3708bc5aa6889be12c1711f21eb65d0f10101648[m
+Author: Pau <paula90zk@gmail.com>
+Date:   Wed Oct 30 15:05:10 2024 -0300
+
+    Elimine el campo foto en registro
+
+[33mcommit 31ea9f62f6b8e883e2f7f56d04342f88eece7b18[m
+Merge: cdcb0b7 3b6d86b
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Wed Oct 30 14:52:45 2024 -0300
+
+    Merge pull request #6 from blejj/pau
+    
+    Boton para tomar o agregar foto
+
+[33mcommit 3b6d86be02216039bf788085181d8d6c2031d87c[m
+Author: Pau <paula90zk@gmail.com>
+Date:   Wed Oct 30 14:50:48 2024 -0300
+
+    Boton para tomar o agregar foto
+
+[33mcommit cdcb0b708770517b17d86eb7e2af525338b3bc5c[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Fri Oct 25 22:29:58 2024 -0300
+
+    Se agregó la carpeta de android
+
+[33mcommit 2ef0ee92afc64e4f3da227093192c11c9e552623[m
+Merge: 1382cf8 0f43c07
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Tue Oct 22 19:43:01 2024 -0300
+
+    Merge pull request #5 from blejj/santi
+    
+    se ajustan comentarios, se sube icono del perro, se agrega consumo de api para la sección adopción de perros
+
+[33mcommit 0f43c07b2c02e7b1c9a7c63a9c044c0ac6c00c8f[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 22 19:41:07 2024 -0300
+
+    se ajusta comentarios y se agrega icono de perro al tab
+
+[33mcommit 2b6593caea463265834e71674152354d6e73e673[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 22 19:38:26 2024 -0300
+
+    se ajusta color de titulo y botones
+
+[33mcommit c49ef4c85e0bb773f2b06d084fc8199bc635cca0[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 22 19:37:37 2024 -0300
+
+    se ajusta tamaño del titulo
+
+[33mcommit e96ac085211ef957b04874e30ea307cab9f8114f[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 22 19:36:36 2024 -0300
+
+    agrego icono de perro al tab
+
+[33mcommit 1382cf8a37037f8375d766528a11cf751589dab4[m
+Merge: dedb49c 2f6a578
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Tue Oct 22 14:31:55 2024 -0300
+
+    Merge pull request #4 from blejj/pau
+    
+    Agruegue mi perfil - sincronice la base de datos - mas campos en regi…
+
+[33mcommit 2f6a578b00e9423fbec5e87a10d2a54fcc3477a0[m
+Author: pauzamo <paula90zk@gmail.com>
+Date:   Tue Oct 22 13:29:21 2024 -0300
+
+    Agruegue mi perfil - sincronice la base de datos - mas campos en register
+
+[33mcommit dedb49cfe4ffa33d864a7330429b1b483dbe44e2[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Mon Oct 21 12:59:52 2024 -0300
+
+    Arreglo de redireccion al cerrar sesión
+
+[33mcommit aa5da896a88712c3656630984cc68e1f1c994199[m
+Merge: 48da628 be26a6c
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Mon Oct 21 01:41:14 2024 -0300
+
+    Merge pull request #3 from blejj/santi
+    
+    se añadió servicio de camara y se insertó en el formulario para que el usuario pueda tomar o seleccionar foto
+
+[33mcommit be26a6c2c0f0fe6386f15025c870c669e4107179[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Mon Oct 21 01:39:49 2024 -0300
+
+    se ajusta formulario para que figure la opción de tomar o seleccionar foto por el usuario
+
+[33mcommit c12a7c8211c683e764248d582714bbeec89e8c9f[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Mon Oct 21 01:34:22 2024 -0300
+
+    se añade plugin y servicio de camara de fotos
+
+[33mcommit 48da628d9fdbd2e6e2a93bd9792cd91c345a62e0[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Fri Oct 18 13:41:20 2024 -0300
+
+    Se agrego botones en el inicio con redirección. Con subir publicacion.
+
+[33mcommit 75dec4f46f305064370917ac685ea2cd0a8b2d23[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Fri Oct 18 11:59:12 2024 -0300
+
+    Edición del inicio
+
+[33mcommit eb158b62350601a3f33c738d31e83d3febb879b0[m
+Author: blejj <fbleileee@gmail.com>
+Date:   Fri Oct 18 10:28:57 2024 -0300
+
+    Finalizado el  registro y login
+
+[33mcommit 92a322bfd7c71187e25e12dae19d44a1bf92046d[m
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Tue Oct 15 02:27:32 2024 -0300
+
+    Create README.md
+
+[33mcommit 89c94e8cace3937bd7ba128403d8b6dacb5aa8ff[m
+Merge: 82b9a77 7e5ef6a
+Author: Daglio Santiago <89492160+dagsandev@users.noreply.github.com>
+Date:   Tue Oct 15 02:22:24 2024 -0300
+
+    Merge pull request #2 from blejj/santi
+    
+    se creó toastService para refactorizar código y se generó sección perros perdidos
+
+[33mcommit 7e5ef6a94adb32095d8962f5b01e397f7c1fffc5[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 15 02:19:46 2024 -0300
+
+    se crea la seccion de perros perdidos
+
+[33mcommit 41aeed318422bd3e4b578a6f40041fe2df14f362[m
+Author: Santiago Daglio <santidaglio@gmail.com>
+Date:   Tue Oct 15 02:19:05 2024 -0300
+
+    se refactoriza para implementar el toast como servicio para no repetir código
+
+[
