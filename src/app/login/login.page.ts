@@ -40,32 +40,6 @@ export class LoginPage {
 
 
   /**
- * Inicia sesión con Google utilizando un popup.
- * 
- * Este método crea un nuevo proveedor de Google y trata de autenticar al usuario.
- * Si el inicio de sesión es exitoso, redirige al usuario a la página principal.
- * Si ocurre un error, muestra un mensaje de error.
- * 
- * @async
- * @function
- * 
- * @throws {Error} Lanza un error si ocurre un problema durante el inicio de sesión.
- * 
- */
-  async loginWithGoogle() {
-    const provider = new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(this.auth, provider); // Asegúrate de pasar 'this.auth' aquí
-      console.log('Usuario logueado con Google:', result.user);
-      // Redirigir después del inicio de sesión exitoso si es necesario
-      this.router.navigate(['/tabs']); 
-    } catch (error) {
-      console.error('Error al iniciar sesión con Google:', error);
-      await this.toastService.showToast('Error al iniciar sesión con Google. Inténtalo de nuevo.'); // Usar el servicio de Toast
-    }
-  }
-
-  /**
    * Intenta iniciar sesión con las credenciales proporcionadas.
    * Valida que los campos no estén vacíos y maneja los errores que puedan surgir durante el proceso de autenticación.
    * 
