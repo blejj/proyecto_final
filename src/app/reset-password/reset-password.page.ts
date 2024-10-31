@@ -2,6 +2,13 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
+/**
+ * Componente para la página de restablecimiento de contraseña.
+ * Permite a los usuarios solicitar el envío de un correo electrónico 
+ * para restablecer su contraseña.
+ * 
+ * @component
+ */
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.page.html',
@@ -10,8 +17,21 @@ import { Router } from '@angular/router';
 export class ResetPasswordPage {
   email: string = '';
 
+  /**
+   * Constructor del componente ResetPasswordPage.
+   * 
+   * @param {AuthService} authService - Servicio de autenticación para gestionar las operaciones de usuario.
+   * @param {Router} router - Router de Angular para la navegación entre páginas.
+   */
   constructor(private authService: AuthService, private router: Router) {}
 
+  /**
+   * Envía un correo electrónico para restablecer la contraseña del usuario.
+   * 
+   * @async
+   * @function
+   * 
+   */
   async enviarCorreoRecuperacion() {
     if (!this.email) {
         alert('Por favor, ingresa un correo electrónico.');
