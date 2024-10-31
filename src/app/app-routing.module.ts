@@ -24,7 +24,11 @@ const routes: Routes = [
   {
     path: 'perros-encontrados',
     loadChildren: () => import('./perros-encontrados/perros-encontrados.module').then( m => m.PerrosEncontradosPageModule)
+  },  {
+    path: 'reset-password',
+    loadChildren: () => import('./reset-password/reset-password.module').then( m => m.ResetPasswordPageModule)
   }
+
 // Agrego la ruta para tabs
 ];
 
