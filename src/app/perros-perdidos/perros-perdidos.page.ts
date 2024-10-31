@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { CrearPublicacionModalComponent } from '../crear-publicacion-modal/crear-publicacion-modal.component'; // Asegúrate de que esta ruta sea correcta
+import { CrearPublicacionModalComponent } from '../crear-publicacion-modal/crear-publicacion-modal.component';
 import { CamaraService } from '../services/camara.service';
 import { AuthService } from '../services/auth.service';
 
@@ -15,6 +15,12 @@ interface Publicacion {
   fecha: Date;
 }
 
+/**
+ * Componente de la página "Perros Perdidos".
+ * Permite a los usuarios crear, visualizar y filtrar publicaciones sobre perros perdidos.
+ * 
+ * @component
+ */
 @Component({
   selector: 'app-perros-perdidos',
   templateUrl: 'perros-perdidos.page.html',
@@ -22,10 +28,17 @@ interface Publicacion {
 })
 
 export class PerrosPerdidosPage {
-  publicaciones: Publicacion[] = []; // Todas las publicaciones
-  publicacionesFiltradas: Publicacion[] = []; // Publicaciones que se muestran
-  modalAbierto: boolean = false; // Arranca el modal en false
 
+  //Lista de todas las publicaciones.
+  publicaciones: Publicacion[] = [];
+
+  //Publicaciones que se muestran actualmente
+  publicacionesFiltradas: Publicacion[] = [];
+
+  //Indica si el modal está abierto.
+  modalAbierto: boolean = false;
+
+  /** Objeto para almacenar los datos de la nueva publicación. */
   nuevaPublicacion: any = {
     titulo: '',
     descripcion: '',
@@ -35,9 +48,23 @@ export class PerrosPerdidosPage {
     imagen: ''
   };
 
+  /**
+   * Crea una instancia del componente PerrosPerdidosPage.
+   * 
+   * @param {ModalController} modalCtrl - Controlador de modal para gestionar los modales en la aplicación.
+   * @param {Router} router - Router de Angular para la navegación entre páginas.
+   * @param {CamaraService} camaraService - Servicio para manejar la funcionalidad de la cámara.
+   * @param {AuthService} authService - Servicio de autenticación para verificar el estado del usuario.
+   */
   constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService, private authService: AuthService) {}
 
-  // Método para abrir el modal
+  /**
+   * Abre el modal para crear una nueva publicación.
+   * 
+   * @async
+   * @function
+   * @returns {Promise<void>} - Promesa que se resuelve cuando el modal se presenta.
+   */
   async abrirModal() {
     const modal = await this.modalCtrl.create({
       component: CrearPublicacionModalComponent,
@@ -58,12 +85,20 @@ export class PerrosPerdidosPage {
     await modal.present();
   }
 
-  // Método para cerrar el modal
+  /**
+   * Método para cerrar el modal
+   * 
+   * @function
+   */
   cerrarModal() {
     this.modalAbierto = false;
   }
 
-  // Método para crear una publicación
+  /**
+   * Crea una nueva publicación con los datos ingresados.
+   * 
+   * @function
+   */
   crearPublicacion() {
     const nuevaPublicacion: Publicacion = {
       titulo: this.nuevaPublicacion.titulo,
@@ -80,12 +115,21 @@ export class PerrosPerdidosPage {
     this.cerrarModal(); // Cierra el modal después de crear la publicación
   }
 
-  // Método para subir una imagen
+  /**
+   * Toma una foto utilizando el servicio de cámara y asigna la imagen a la nueva publicación.
+   * 
+   * @async
+   * @function
+   */
     async tomarFoto(){
       this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
     }
 
-  // Método para filtrar las publicaciones por fecha
+  /**
+   * Filtra las publicaciones por fecha, mostrando solo aquellas que son más recientes que el número de días especificado.
+   * 
+   * @param {number} dias - Número de días para filtrar las publicaciones.
+   */
   filtrarPorFecha(dias: number) {
     const fechaLimite = new Date();
     fechaLimite.setDate(fechaLimite.getDate() - dias); // Establece la fecha límite
@@ -95,14 +139,21 @@ export class PerrosPerdidosPage {
     });
   }
 
+  /**
+   * Navega de vuelta a la página de inicio (tabs).
+   * 
+   * @function
+   */
   navegarInicio() {
-    this.router.navigate(['/tabs']); // Cambia '/tabs' si tu ruta de inicio es diferente
+    this.router.navigate(['/tabs']); 
   }
 
+  /**
+   * Verifica si el usuario está autenticado al ingresar a la página.
+   * Si no está autenticado, redirige al usuario a la página de login.
+   */
   ionViewWillEnter() {
-    // Verificar si el usuario está autenticado
     if (!this.authService.isLoggedIn()) {
-      // Redirigir al login si no está autenticado
       this.router.navigate(['/login']);
     }
   }

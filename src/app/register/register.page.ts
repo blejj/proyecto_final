@@ -2,6 +2,12 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../services/toast.service';
 
+/**
+ * Componente de la página de registro.
+ * Permite a los nuevos usuarios ingresar sus datos para registrarse en la aplicación.
+ * 
+ * @component
+ */
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -38,16 +44,22 @@ export class RegisterPage {
    */
   telefono: string = '';
 
+  /**
+   * Crea una instancia del componente RegisterPage.
+   * 
+   * @param {AuthService} authService - Servicio de autenticación para manejar el registro de usuarios.
+   * @param {ToastService} toastService - Servicio para mostrar mensajes de toast al usuario.
+   */
   constructor(private authService: AuthService, private toastService: ToastService) {}
 
   /**
    * Método asíncrono para registrar un nuevo usuario.
    * 
-   * Este método valida que el usuario haya proporcionado tanto el correo electrónico como la
-   * contraseña. Si ambos campos están completos, intenta registrar al usuario utilizando el
-   * servicio de autenticación. En caso de éxito, muestra una alerta indicando que el registro
-   * fue exitoso. Si ocurre un error, se captura y muestra un mensaje de error.
+   * Intenta registrar un nuevo usuario con los datos proporcionados.
+   * Valida que todos los campos requeridos estén completos y maneja los errores que puedan surgir durante el proceso de registro.
    * 
+   * @async
+   * @function
    * @returns {Promise<void>} No retorna ningún valor, pero puede mostrar alertas en caso de error o éxito.
    * @throws {Error} Si ocurre un error durante el proceso de registro, se captura y se muestra un mensaje de error.
    */
@@ -62,12 +74,13 @@ export class RegisterPage {
     try {
       // Intentar registrar un nuevo usuario con el servicio de autenticación
       await this.authService.register(this.email, this.password, this.nombre, this.apellido, this.telefono);
-      alert('Registro exitoso');
+      await this.toastService.showToast('Registro exitoso');
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
         console.error('Firebase error code:', error.code);
 
+        // Mensajes específicos según el código de error
         if (error.code === 'auth/email-already-in-use') {
           const errorMessage = 'El email ya está registrado, iniciá sesión.';
           await this.toastService.showToast(errorMessage);

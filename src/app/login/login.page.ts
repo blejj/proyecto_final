@@ -2,20 +2,56 @@ import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../services/toast.service';
-import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth'; // Asegúrate de importar Auth y GoogleAuthProvider
+import { Auth, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
 
+/**
+ * Componente de la página de inicio de sesión.
+ * Permite a los usuarios ingresar su email y contraseña para autenticarse en la aplicación.
+ * 
+ * @component
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage {
-  email: string = ''; // Email proporcionado por el usuario
-  password: string = ''; // Contraseña proporcionada por el usuario
 
+  /**
+   * Email proporcionado por el usuario para el login.
+   * @type {string}
+   */
+  email: string = '';
+
+  /**
+   * Contraseña proporcionada por el usuario para el login.
+   * @type {string}
+   */
+  password: string = '';
+
+  /**
+   * Crea una instancia del componente LoginPage.
+   * 
+   * @param {AuthService} authService - Servicio de autenticación para manejar el inicio de sesión.
+   * @param {Router} router - Router de Angular para la navegación entre páginas.
+   * @param {ToastService} toastService - Servicio para mostrar mensajes de toast al usuario.
+   */
   constructor(private authService: AuthService, private router: Router, private toastService: ToastService, private auth: Auth) {}
 
-  // Método para iniciar sesión con Google
+
+  /**
+ * Inicia sesión con Google utilizando un popup.
+ * 
+ * Este método crea un nuevo proveedor de Google y trata de autenticar al usuario.
+ * Si el inicio de sesión es exitoso, redirige al usuario a la página principal.
+ * Si ocurre un error, muestra un mensaje de error.
+ * 
+ * @async
+ * @function
+ * 
+ * @throws {Error} Lanza un error si ocurre un problema durante el inicio de sesión.
+ * 
+ */
   async loginWithGoogle() {
     const provider = new GoogleAuthProvider();
     try {
@@ -29,14 +65,22 @@ export class LoginPage {
     }
   }
 
+  /**
+   * Intenta iniciar sesión con las credenciales proporcionadas.
+   * Valida que los campos no estén vacíos y maneja los errores que puedan surgir durante el proceso de autenticación.
+   * 
+   * @async
+   * @function
+   * @returns {Promise<void>} - Promesa que se resuelve cuando el proceso de inicio de sesión se completa.
+   */
   async login() {
-    // Verificar que el usuario haya completado tanto el email como la contraseña
+    // Validar que se ingresen email y contraseña
     if (!this.email || !this.password) {
       const errorMessage = 'Ingrese email y contraseña';
       await this.toastService.showToast(errorMessage);
       return;
     }
-
+  
     try {
       // Intentar iniciar sesión con el servicio de autenticación
       await this.authService.login(this.email, this.password);
@@ -45,9 +89,9 @@ export class LoginPage {
     } catch (error: any) {
       // Si hay un código de error de Firebase, se registra en la consola
       if (error.code) {
-        console.error('Código de error de Firebase:', error.code);
-
-        // Verifica si el error es por contraseña incorrecta
+        console.error('Codigo de error de Firebase:', error.code);
+    
+        // Mensajes específicos según el código de error
         if (error.code === 'auth/wrong-password') {
           const errorMessage = 'La contraseña ingresada es incorrecta';
           await this.toastService.showToast(errorMessage);
@@ -57,14 +101,15 @@ export class LoginPage {
         } else if (error.code === 'auth/invalid-credential') {
           const errorMessage = 'Las credenciales proporcionadas no son válidas. Verifica tu correo y contraseña.';
           await this.toastService.showToast(errorMessage);
-        } else if (error.code === 'auth/invalid-email') {
+        } else if (error.code === 'auth/invalid-email'){
           const errorMessage = 'Los datos son incorrectos, volvé a intentar!';
           await this.toastService.showToast(errorMessage);
-        } else {
+        }else {
           const errorMessage = error.message || 'Ocurrió un error durante el login';
           await this.toastService.showToast(errorMessage);
         }
       }
     }
   }
+
 }
