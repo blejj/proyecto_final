@@ -26,16 +26,15 @@ interface Publicacion {
   templateUrl: 'perros-perdidos.page.html',
   styleUrls: ['perros-perdidos.page.scss']
 })
-
 export class PerrosPerdidosPage {
 
-  //Lista de todas las publicaciones.
+  // Lista de todas las publicaciones.
   publicaciones: Publicacion[] = [];
 
-  //Publicaciones que se muestran actualmente
+  // Publicaciones que se muestran actualmente
   publicacionesFiltradas: Publicacion[] = [];
 
-  //Indica si el modal está abierto.
+  // Indica si el modal está abierto.
   modalAbierto: boolean = false;
 
   /** Objeto para almacenar los datos de la nueva publicación. */
@@ -48,57 +47,34 @@ export class PerrosPerdidosPage {
     imagen: ''
   };
 
-  /**
-   * Crea una instancia del componente PerrosPerdidosPage.
-   * 
-   * @param {ModalController} modalCtrl - Controlador de modal para gestionar los modales en la aplicación.
-   * @param {Router} router - Router de Angular para la navegación entre páginas.
-   * @param {CamaraService} camaraService - Servicio para manejar la funcionalidad de la cámara.
-   * @param {AuthService} authService - Servicio de autenticación para verificar el estado del usuario.
-   */
-  constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService, private authService: AuthService) {}
+  constructor(private modalCtrl: ModalController, private router: Router, private camaraService: CamaraService, private authService: AuthService) {
+    this.cargarPublicaciones(); // Cargar publicaciones al iniciar el componente
+  }
 
-  /**
-   * Abre el modal para crear una nueva publicación.
-   * 
-   * @async
-   * @function
-   * @returns {Promise<void>} - Promesa que se resuelve cuando el modal se presenta.
-   */
   async abrirModal() {
     const modal = await this.modalCtrl.create({
       component: CrearPublicacionModalComponent,
     });
-  
+
     modal.onDidDismiss().then((data) => {
       if (data.data) {
-        // Acá es donde recibimos los datos de la nueva publicación
         const nuevaPublicacion: Publicacion = {
           ...data.data,
           fecha: new Date(), // Asignar fecha al recibir la publicación
         };
         this.publicaciones.push(nuevaPublicacion); // Agrega la nueva publicación
         this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
+        this.guardarPublicaciones(); // Guarda las publicaciones en localStorage
       }
     });
-  
+
     await modal.present();
   }
 
-  /**
-   * Método para cerrar el modal
-   * 
-   * @function
-   */
   cerrarModal() {
     this.modalAbierto = false;
   }
 
-  /**
-   * Crea una nueva publicación con los datos ingresados.
-   * 
-   * @function
-   */
   crearPublicacion() {
     const nuevaPublicacion: Publicacion = {
       titulo: this.nuevaPublicacion.titulo,
@@ -112,24 +88,14 @@ export class PerrosPerdidosPage {
 
     this.publicaciones.push(nuevaPublicacion); // Agrega la nueva publicación
     this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
+    this.guardarPublicaciones(); // Guarda las publicaciones en localStorage
     this.cerrarModal(); // Cierra el modal después de crear la publicación
   }
 
-  /**
-   * Toma una foto utilizando el servicio de cámara y asigna la imagen a la nueva publicación.
-   * 
-   * @async
-   * @function
-   */
-    async tomarFoto(){
-      this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
-    }
+  async tomarFoto() {
+    this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
+  }
 
-  /**
-   * Filtra las publicaciones por fecha, mostrando solo aquellas que son más recientes que el número de días especificado.
-   * 
-   * @param {number} dias - Número de días para filtrar las publicaciones.
-   */
   filtrarPorFecha(dias: number) {
     const fechaLimite = new Date();
     fechaLimite.setDate(fechaLimite.getDate() - dias); // Establece la fecha límite
@@ -139,22 +105,27 @@ export class PerrosPerdidosPage {
     });
   }
 
-  /**
-   * Navega de vuelta a la página de inicio (tabs).
-   * 
-   * @function
-   */
   navegarInicio() {
-    this.router.navigate(['/tabs']); 
+    this.router.navigate(['/tabs']);
   }
 
-  /**
-   * Verifica si el usuario está autenticado al ingresar a la página.
-   * Si no está autenticado, redirige al usuario a la página de login.
-   */
   ionViewWillEnter() {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
+    }
+  }
+
+  // Método para guardar las publicaciones en localStorage
+  guardarPublicaciones() {
+    localStorage.setItem('publicaciones', JSON.stringify(this.publicaciones));
+  }
+
+  // Método para cargar las publicaciones desde localStorage
+  cargarPublicaciones() {
+    const publicacionesGuardadas = localStorage.getItem('publicaciones');
+    if (publicacionesGuardadas) {
+      this.publicaciones = JSON.parse(publicacionesGuardadas);
+      this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
     }
   }
 }

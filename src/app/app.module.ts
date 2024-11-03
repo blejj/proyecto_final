@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { CrearPublicacionModalComponent } from './crear-publicacion-modal/crear-publicacion-modal.component';
+import { ToastService } from './services/toast.service';
 
 @NgModule({
   declarations: [
