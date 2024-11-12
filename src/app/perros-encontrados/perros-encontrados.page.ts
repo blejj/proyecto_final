@@ -17,30 +17,16 @@ interface Publicacion {
   fecha: Date;
 }
 
-/**
- * Componente de la página "Perros Encontrados".
- * Permite a los usuarios crear, visualizar y filtrar publicaciones sobre perros encontrados.
- * 
- * @component
- */
 @Component({
   selector: 'app-perros-encontrados',
   templateUrl: 'perros-encontrados.page.html',
   styleUrls: ['perros-encontrados.page.scss']
 })
-
 export class PerrosEncontradosPage {
-
-  //Lista de todas las publicaciones.
   publicaciones: Publicacion[] = [];
-
-  //Publicaciones que se muestran actualmente.
   publicacionesFiltradas: Publicacion[] = [];
-
-  //Indica si el modal está abierto -inicializado en false-
   modalAbierto: boolean = false;
 
-  //Objeto para almacenar los datos de la nueva publicación.
   nuevaPublicacion: any = {
     titulo: '',
     descripcion: '',
@@ -50,58 +36,56 @@ export class PerrosEncontradosPage {
     imagen: ''
   };
 
-  /**
-   * Crea una instancia del componente PerrosEncontradosPage.
-   * 
-   * @param {ModalController} modalCtrl - Controlador de modal para gestionar los modales en la aplicación.
-   * @param {Router} router - Router de Angular para la navegación entre páginas.
-   * @param {ApiService} apiService - Servicio para interactuar con la API.
-   * @param {ToastService} toastService - Servicio para mostrar mensajes de toast al usuario.
-   * @param {CamaraService} camaraService - Servicio para manejar la funcionalidad de la cámara.
-   * @param {AuthService} authService - Servicio de autenticación para verificar el estado del usuario.
-   */
   constructor(private modalCtrl: ModalController, private router: Router, private apiService: ApiService, private toastService: ToastService, private camaraService: CamaraService, private authService: AuthService) {}
 
-  /**
-   * Abre el modal para crear una nueva publicación.
-   * 
-   * @async
-   * @function
-   */
+  async ionViewWillEnter() {
+    // Cargar publicaciones desde localStorage
+    this.cargarPublicacionesDesdeLocalStorage();
+
+    // Verificar si el usuario está autenticado
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
+  }
+
+  // Método para cargar publicaciones desde localStorage
+  cargarPublicacionesDesdeLocalStorage() {
+    const existingPosts = localStorage.getItem('lostDogPosts');
+    this.publicaciones = existingPosts ? JSON.parse(existingPosts) : [];
+    this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
+  }
+
   async abrirModal() {
     const modal = await this.modalCtrl.create({
       component: CrearPublicacionModalComponent,
     });
-  
+
     modal.onDidDismiss().then((data) => {
       if (data.data) {
-        // Acá es donde recibimos los datos de la nueva publicación
         const nuevaPublicacion: Publicacion = {
           ...data.data,
           fecha: new Date(), // Asignar fecha al recibir la publicación
         };
         this.publicaciones.push(nuevaPublicacion); // Agrega la nueva publicación
         this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
+
+        // Guardar en localStorage
+        this.guardarPublicacionesEnLocalStorage();
       }
     });
-  
+
     await modal.present();
   }
 
-  /**
-   * Método para cerrar el modal
-   * 
-   * @function
-   */
+  // Método para guardar publicaciones en localStorage
+  guardarPublicacionesEnLocalStorage() {
+    localStorage.setItem('lostDogPosts', JSON.stringify(this.publicaciones));
+  }
+
   cerrarModal() {
     this.modalAbierto = false;
   }
 
-  /**
-   * Crea una nueva publicación con los datos ingresados.
-   * 
-   * @function
-   */
   crearPublicacion() {
     const nuevaPublicacion: Publicacion = {
       titulo: this.nuevaPublicacion.titulo,
@@ -115,24 +99,14 @@ export class PerrosEncontradosPage {
 
     this.publicaciones.push(nuevaPublicacion); // Agrega la nueva publicación
     this.publicacionesFiltradas = [...this.publicaciones]; // Actualiza las publicaciones filtradas
+    this.guardarPublicacionesEnLocalStorage(); // Guardar en localStorage
     this.cerrarModal(); // Cierra el modal después de crear la publicación
   }
 
-  /**
-   * Toma una foto utilizando el servicio de cámara y asigna la imagen a la nueva publicación.
-   * 
-   * @async
-   * @function
-   */
-  async tomarFoto(){
+  async tomarFoto() {
     this.nuevaPublicacion.imagen = await this.camaraService.tomarFoto();
   }    
 
-  /**
-   * Filtra las publicaciones por fecha, mostrando solo aquellas que son más recientes que el número de días especificado.
-   * 
-   * @param {number} dias - Número de días para filtrar las publicaciones.
-   */
   filtrarPorFecha(dias: number) {
     const fechaLimite = new Date();
     fechaLimite.setDate(fechaLimite.getDate() - dias); // Establece la fecha límite
@@ -142,22 +116,7 @@ export class PerrosEncontradosPage {
     });
   }
 
-  /**
-   * Navega de vuelta a la página de inicio (tabs).
-   * 
-   * @function
-   */
   navegarInicio() {
     this.router.navigate(['/tabs']);
-  }
-
-  /**
-   * Verifica si el usuario está autenticado al ingresar a la página.
-   * Si no está autenticado, redirige al usuario a la página de login.
-   */
-  ionViewWillEnter() {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-    }
   }
 }
