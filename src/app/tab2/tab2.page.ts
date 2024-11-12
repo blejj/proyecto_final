@@ -41,12 +41,4 @@ export class Tab2Page implements OnInit {
       );
     });
   }
-
-  /**
-   * Alterna la expansión de un elemento en la lista.
-   * @param {string} nombre - Nombre de la raza que se está expandiendo.
-   */
-  toggleExpansion(nombre: string) {
-    this.expandedItem = this.expandedItem === nombre ? null : nombre; // Cambia el estado de expansión
-  }
 }
